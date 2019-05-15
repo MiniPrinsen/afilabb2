@@ -1,16 +1,22 @@
 <head>
-  <title>afilabb2</title>
+  <title>Annonseringssystem</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
+  <h1>Annonseringssystem</h1>
+  <div id="background"></div>
+  <form action="">
+    <input type="radio" name="customer" value="company"> Företag<br>
+    <input type="radio" name="customer" value="private"> Privatperson<br>
+  </form>
   {{> hello}}
   {{> info}}
+  
 </body>
 
 <template name="hello">
   <button>Click Me</button>
+  <div class="background"></div>
   <p>You've pressed the button {{counter}} times.</p>
 </template>
 
