@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import App from './App.js';
 
-export default class SubscriberForm extends Component {
-    render() {
-        const { inputChange } = this.props
+ const SubscriberForm = ({submitAd, inputChange }) => {
+ 
         return (
        <React.Fragment>
-            <input 
-                type="text"
-                ref="textInput"
-                placeholder="Varans namn"
-                onChange={(event) => inputChange('adForm', event)}
-                />
+                <input 
+                type="text" name="adProductPrice" placeholder="Varans pris" onChange={(event) => inputChange('adForm', event)}
+                /> <br/>
+                 <input  type="text" name="adContent" placeholder="Innehåll" onChange={(event) => inputChange('adForm', event)}
+                /> <br/>
+                 <input  type="text" name="adTitle" placeholder="Rubrik" onChange={(event) => inputChange('adForm', event)}
+                /> <br/>
+                 <input type="text" name="adPrice" placeholder="Annonspris (40 eller 0, statiskt)" onChange={(event) => inputChange('adForm', event)}
+                /> <br/>
+                <button onClick={submitAd}></button>
         </React.Fragment>
  
         );
-    }
+    
 }
+export default SubscriberForm

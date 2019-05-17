@@ -13,25 +13,46 @@ class App extends Component {
         showSubscriberForm: false,
         showAdForm: false,
         companyForm: {
-            name: '',
-            org: '', //ADD ALL INPUTS
+            compName: '',
+            compOrg: '',
+            compPhone: '',
+            compAddress: '',
+            compPostal: '',
+            compInvoiceAddress: '',
+            compInvoicePostalCode: '',
+            compCity: '',
+             //ADD ALL INPUTS
         },
         adForm: {
+            adProductPrice: '',
+            adContent: '',
+            adTitle: '',
+            adPrice: '',
+            adAdvertiser: '',
+
+
 
         }
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
-        const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+        const ad_rubrik = this.state.adForm.adTitle
+        const ad_varans_pris = this.state.adForm.adProductPrice
+        const ad_innehall = this.state.adForm.adContent
+        const ad_pris = this.state.adForm.adPrice
+        const ad_annonsor = this.state.adForm.adAdvertiser
 
             Ads.insert({
-                text,
-                createdAt: new Date(),
+                ad_rubrik,
+                ad_varans_pris,
+                ad_innehall,
+                ad_pris,
+                
             });
 
-        ReactDOM.findDOMNode(this.refs.textInput).value = '';
+       // ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
     
     handleInputChange = (form, event) => {
@@ -89,12 +110,14 @@ class App extends Component {
                 <ul>
                 { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
                 { this.state.showSubscriberForm && <SubscriberForm /> }
-                { this.state.showAdForm && <AdForm inputChange={this.handleInputChange}/> }
+                { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.handleSubmit}/> }
                 </ul>
                 
-                <ul>
+                <table>
+                    <tbody>
                     {this.renderAds()}
-                </ul>
+                    </tbody>
+                </table>
             </div>
         );
     }

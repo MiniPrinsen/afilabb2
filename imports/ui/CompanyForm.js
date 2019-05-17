@@ -7,23 +7,23 @@ const CompanyForm = ({ adForm, inputChange }) =>  {
         <React.Fragment>
             <label>
                 Namn:
-                <input type="text" name="name" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compName" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Organisationsnummer: 
-                <input type="text" name="org" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compOrg" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Telefonnummer:
-                <input type="text" name="phone" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compPhone" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Utdelningsadress:
-                <input type="text" name="address" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compAddress" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Postnummer: 
-                <input type="text" name="postal" onChange={(event) => inputChange('companyForm', event)} /> <br/> <br/>
+                <input type="text" name="compPostal" onChange={(event) => inputChange('companyForm', event)} /> <br/> <br/>
 
                 <b>Faktureringsadress: </b> <br/>
                 Utdelningsadress: 
-                <input type="text" name="invoice-address" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compInvoiceAddress" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Postnummer: 
-                <input type="text" name="invoice-postal-code" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compInvoicePostalCode" onChange={(event) => inputChange('companyForm', event)} /> <br/>
                 Ort: 
-                <input type="text" name="city" onChange={(event) => inputChange('companyForm', event)} /> <br/>
+                <input type="text" name="compCity" onChange={(event) => inputChange('companyForm', event)} /> <br/>
             </label>
             <button onClick={adForm}></button>
         </React.Fragment>
