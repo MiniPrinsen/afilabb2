@@ -6,12 +6,14 @@ import { Ads } from '../api/ads.js';
 import CompanyForm from './CompanyForm.js';
 import SubscriberForm from './SubscriberForm.js';
 import AdForm from './AdForm.js';
+import AdTableHead from './AdTableHead.js';
 
 class App extends Component {
     state = {
         showCompanyForm: false,
         showSubscriberForm: false,
         showAdForm: false,
+        showAdTable: false,
         companyForm: {
             compName: '',
             compOrg: '',
@@ -31,9 +33,17 @@ class App extends Component {
             adAdvertiser: '',
 
 
-
         }
     };
+
+    renderAdTable = () => {
+        this.setState({
+            showCompanyForm: false,
+            showSubscriberForm: false,
+            showAdForm: false,
+            showAdTable: true,
+        });
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -42,15 +52,25 @@ class App extends Component {
         const ad_varans_pris = this.state.adForm.adProductPrice
         const ad_innehall = this.state.adForm.adContent
         const ad_pris = this.state.adForm.adPrice
-        const ad_annonsor = this.state.adForm.adAdvertiser
+        // var ad_annonsor = ''
 
+        // if(this.state.adForm.adAdvertiser == true) {
+        //     ad_annonsor = 'Företag';
+        // }
+        // else {
+        //     ad_annonsor = 'Privatperson';
+        // }
+        
             Ads.insert({
                 ad_rubrik,
                 ad_varans_pris,
                 ad_innehall,
                 ad_pris,
-                
+                // ad_annonsor,
             });
+            //this.renderAdTable();
+            this.renderAdTable();
+        
 
        // ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
@@ -98,6 +118,12 @@ class App extends Component {
     render() {
         return (
             <div className="container">
+                <nav>
+                    <ul>
+                        <li><a href="main.html">Skapa annons</a></li>
+                        <li><button onClick={this.renderAdTable}>Annonser</button></li>
+                    </ul>
+                </nav>
                 <h1>Annonseringssystem</h1>
                 <form>
                     <input type="radio" name="advertiser" value="company" onChange={this.toggleCompanyCompleted}/>
@@ -111,11 +137,14 @@ class App extends Component {
                 { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
                 { this.state.showSubscriberForm && <SubscriberForm /> }
                 { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.handleSubmit}/> }
+                
                 </ul>
                 
                 <table>
+                    { this.state.showAdTable && < AdTableHead /> }   
                     <tbody>
-                    {this.renderAds()}
+                    { this.state.showAdTable && this.renderAds() }
+                    {/* {this.renderAds()} */}
                     </tbody>
                 </table>
             </div>

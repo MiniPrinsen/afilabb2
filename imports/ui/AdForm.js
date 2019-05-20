@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import App from './App.js';
 
- const SubscriberForm = ({submitAd, inputChange }) => {
+ const AdForm = ({submitAd, inputChange }) => {
  
         return (
        <React.Fragment>
@@ -20,4 +20,4 @@ import App from './App.js';
         );
     
 }
-export default SubscriberForm
+export default AdForm
