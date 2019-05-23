@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import Ad from './Ad.js';
 import { withTracker } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
+
 import { Ads } from '../api/ads.js';
-import CompanyForm from './CompanyForm.js';
-import SubscriberForm from './SubscriberForm.js';
+
+import Ad from './Ad.js';
 import AdForm from './AdForm.js';
 import AdTableHead from './AdTableHead.js';
-import SubscriberCheck from './SubscriberCheck.js';
+import CompanyForm from './CompanyForm.js';
+import SubscriberForm from './SubscriberForm.js';
+import SubscriberSearch from './SubscriberSearch.js';
 
 class App extends Component {
     state = {
-        showCompanyForm: false,
-        showSubscriberForm: false,
         showAdForm: false,
         showAdTable: false,
-        showSubCheck: false,
-        subscriberCheck: {
+        showCompanyForm: false,
+        showSubscriberForm: false,
+        showSubscriberSearch: false,
+           
+        subscriberForm: {
             subFirstName: '',
             subLastName: '',
             subPersonNumber: '',
@@ -24,33 +26,34 @@ class App extends Component {
             subPostalCode: '',
             subPrenNr: '',
         },
-
         companyForm: {
             compName: '',
             compOrg: '',
             compPhone: '',
             compAddress: '',
             compPostal: '',
+
             compInvoiceAddress: '',
             compInvoicePostalCode: '',
             compCity: '',
         },
         adForm: {
+            adTitle: '',
             adProductPrice: '',
             adContent: '',
-            adTitle: '',
             adPrice: '',
             adAdvertiser: '',
         },
-        subscriberForm: {
-            subNr: '',
+        subscriberSearch: {
+            subSearchNr: '',
         }
     };
-    componentDidMount = () => {
-        this.getData()
-    }
+    // componentDidMount = () => {
+    //     this.getData()
+    // }
+
     getData = () => {
-        fetch(`http://localhost:3002/subs?prenNr=${this.state.subscriberForm.subNr}`, {
+        fetch(`http://localhost:3002/subs?prenNr=${this.state.subscriberSearch.subSearchNr}`, {
             method: 'GET',
             credentials: 'include',
         })
@@ -58,12 +61,13 @@ class App extends Component {
         .then(json => {
             json.map(subscriber => {
                 this.setState({
-                    showCompanyForm: false,
-                    showSubscriberForm: false,
                     showAdForm: false,
                     showAdTable: false,
-                    showSubCheck: true,
-                    subscriberCheck: {
+                    showCompanyForm: false,
+                    showSubscriberSearch: false,
+                    
+                    showSubscriberForm: true,
+                    subscriberForm: {
                         subFirstName: subscriber.sub_fornamn,
                         subLastName: subscriber.sub_efternamn,
                         subPersonNumber: subscriber.sub_personNr,
@@ -77,48 +81,31 @@ class App extends Component {
         .catch(err => console.log(err))
     }
     updateData = () => {
-        fetch(`http://localhost:3002/update?prenNr=${this.state.subscriberForm.subNr}&subFirstName=${this.state.subscriberCheck.subFirstName}&subLastName=${this.state.subscriberCheck.subLastName}&subPersonNumber=${this.state.subscriberCheck.subPersonNumber}&subAddress=${this.state.subscriberCheck.subAddress}&subPostalCode=${this.state.subscriberCheck.subPostalCode}`, {
+        fetch(`http://localhost:3002/update?prenNr=${this.state.subscriberSearch.subSearchNr}&subFirstName=${this.state.subscriberForm.subFirstName}&subLastName=${this.state.subscriberForm.subLastName}&subPersonNumber=${this.state.subscriberForm.subPersonNumber}&subAddress=${this.state.subscriberForm.subAddress}&subPostalCode=${this.state.subscriberForm.subPostalCode}`, {
             method: 'GET',
             credentials: 'include',
         })
         .then(res => res.json()
         .then(json => {
-            // json.map(subscriber => {
-            //     this.setState({
-            //         showCompanyForm: false,
-            //         showSubscriberForm: false,
-            //         showAdForm: false,
-            //         showAdTable: false,
-            //         showSubCheck: true,
-            //         subscriberCheck: {
-            //             subFirstName: subscriber.sub_fornamn,
-            //             subLastName: subscriber.sub_efternamn,
-            //             subPersonNumber: subscriber.sub_personNr,
-            //             subPostalCode: subscriber.sub_postNr,
-            //             subAddress: subscriber.sub_utAddr,
-            //             subPrenNr: subscriber.sub_prenNr,
-            //         }
-            //     })
-            // }) 
-            console.log("HEJ");
+            console.log("Uppdaterar data: ", json);
         }))
         .catch(err => console.log(err))
     }
 
-
     renderAdTable = () => {
         this.setState({
+            showAdForm: false,
             showCompanyForm: false,
             showSubscriberForm: false,
-            showAdForm: false,
+            showSubscriberSearch: false,
+            
             showAdTable: true,
-            showSubCheck: false,
         });
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-
+        
         const ad_rubrik = this.state.adForm.adTitle
         const ad_varans_pris = this.state.adForm.adProductPrice
         const ad_innehall = this.state.adForm.adContent
@@ -145,13 +132,13 @@ class App extends Component {
     toggleCompanyCompleted = (e) => {
         this.setState({
             showCompanyForm: !this.state.showCompanyForm,
-            showSubscriberForm: false,
+            showSubscriberSearch: false,
         });
     }
     toggleSubscriberCompleted = (e) => {
         this.setState({
             showCompanyForm: false,
-            showSubscriberForm: !this.state.showSubscriberForm,
+            showSubscriberSearch: !this.state.showSubscriberSearch,
         });
     }
     renderAds = () => {
@@ -163,16 +150,16 @@ class App extends Component {
     showAdForm = () => {
         this.setState({
             showCompanyForm: false,
+            showSubscriberSearch: false,
             showSubscriberForm: false,
-            showSubCheck: false,
             showAdForm: !this.state.showAdForm,
         });
     }
     showAdForm2 = () => {
         this.setState({
             showCompanyForm: false,
+            showSubscriberSearch: false,
             showSubscriberForm: false,
-            showSubCheck: false,
             showAdForm: !this.state.showAdForm,
         });
         this.updateData();
@@ -198,9 +185,9 @@ class App extends Component {
                 </form>
                 <ul>
                 { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
-                { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} submitForm={this.getData} /> }
+                { this.state.showSubscriberSearch && <SubscriberSearch inputChange={this.handleInputChange} submitForm={this.getData} /> }
                 { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.handleSubmit}/> }
-                { this.state.showSubCheck && <SubscriberCheck inputChange={this.handleInputChange} adForm={this.showAdForm2} subscriberCheck={this.state.subscriberCheck}/> }
+                { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} adForm={this.showAdForm2} subscriberForm={this.state.subscriberForm}/> }
                 
                 </ul>
                 

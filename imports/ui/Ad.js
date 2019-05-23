@@ -8,14 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-// export default class Ad extends Component {
-//     render() {
-//         return (
-//             <li>{this.props.ad.ad_rubrik}</li>
-//         )
-//     }
-// }
-
 const CustomTableCell = withStyles(theme => ({
     head: {
       backgroundColor: theme.palette.common.black,
