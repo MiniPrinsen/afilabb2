@@ -100,10 +100,10 @@ class App extends Component {
            var name = this.state.subscriberForm.subFirstName;
            var subid = this.state.subscriberForm.subId
           try {
-            Ads.find({sub_id: this.state.subscriberForm.subId}).forEach(function(collname) {
+            Ads.find({sub_id: this.state.subscriberForm.subId}).forEach(function(singleDoc) {
                 //console.log("God dag");
 
-                var dota = collname._id
+                var dota = singleDoc._id
 
                 console.log("data: ", dota)
                 Ads.update({_id: dota}, { $set: { ad_annonsor: name } })
