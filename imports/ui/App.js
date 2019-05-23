@@ -48,9 +48,9 @@ class App extends Component {
             subSearchNr: '',
         }
     };
-    componentDidMount = () => {
-        this.getData()
-    }
+    // componentDidMount = () => {
+    //     this.getData()
+    // }
 
     getData = () => {
         fetch(`http://localhost:3002/subs?prenNr=${this.state.subscriberSearch.subSearchNr}`, {
@@ -80,14 +80,16 @@ class App extends Component {
         }))
         .catch(err => console.log(err))
     }
+
     updateData = () => {
+        this.showAdForm()
         fetch(`http://localhost:3002/update?prenNr=${this.state.subscriberSearch.subSearchNr}&subFirstName=${this.state.subscriberForm.subFirstName}&subLastName=${this.state.subscriberForm.subLastName}&subPersonNumber=${this.state.subscriberForm.subPersonNumber}&subAddress=${this.state.subscriberForm.subAddress}&subPostalCode=${this.state.subscriberForm.subPostalCode}`, {
             method: 'GET',
             credentials: 'include',
         })
         .then(res => res.json()
         .then(json => {
-            console.log("Uppdaterar data: ", json);
+            console.log("Uppdaterar data: ", json)
         }))
         .catch(err => console.log(err))
     }
@@ -103,9 +105,9 @@ class App extends Component {
         });
     }
 
-    handleSubmit = (event) => {
+    insertAd = (event) => {
         event.preventDefault();
-        
+
         const ad_rubrik = this.state.adForm.adTitle
         const ad_varans_pris = this.state.adForm.adProductPrice
         const ad_innehall = this.state.adForm.adContent
@@ -135,12 +137,14 @@ class App extends Component {
             showSubscriberSearch: false,
         });
     }
+
     toggleSubscriberCompleted = (e) => {
         this.setState({
             showCompanyForm: false,
             showSubscriberSearch: !this.state.showSubscriberSearch,
         });
     }
+
     renderAds = () => {
         return this.props.ads.map((ad) => (
             <Ad key={ad._id} ad={ad}/>
@@ -154,15 +158,6 @@ class App extends Component {
             showSubscriberForm: false,
             showAdForm: !this.state.showAdForm,
         });
-    }
-    showAdForm2 = () => {
-        this.setState({
-            showCompanyForm: false,
-            showSubscriberSearch: false,
-            showSubscriberForm: false,
-            showAdForm: !this.state.showAdForm,
-        });
-        this.updateData();
     }
     
     render() {
@@ -184,17 +179,15 @@ class App extends Component {
                     <br/>
                 </form>
                 <ul>
-                { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
-                { this.state.showSubscriberSearch && <SubscriberSearch inputChange={this.handleInputChange} submitForm={this.getData} /> }
-                { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.handleSubmit}/> }
-                { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} adForm={this.showAdForm2} subscriberForm={this.state.subscriberForm}/> }
-                
+                    { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
+                    { this.state.showSubscriberSearch && <SubscriberSearch inputChange={this.handleInputChange} submitForm={this.getData} /> }
+                    { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.insertAd}/> }
+                    { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} adForm={this.updateData} subscriberForm={this.state.subscriberForm}/> }   
                 </ul>
-                
                 <table>
                     { this.state.showAdTable && < AdTableHead /> }   
                     <tbody>
-                    { this.state.showAdTable && this.renderAds() }
+                        { this.state.showAdTable && this.renderAds() }
                     </tbody>
                 </table>
             </div>
