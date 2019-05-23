@@ -19,9 +19,10 @@ const Ad = (props) => {
         <React.Fragment>
             <TableRow>
               <CustomTableCell component="th" scope="row">{props.ad.ad_rubrik}</CustomTableCell>
-              <CustomTableCell align="right">{props.ad.ad_varans_pris}</CustomTableCell>
               <CustomTableCell align="right">{props.ad.ad_innehall}</CustomTableCell>
+              <CustomTableCell align="right">{props.ad.ad_varans_pris}</CustomTableCell>
               <CustomTableCell align="right">{props.ad.ad_pris}</CustomTableCell>
+              <CustomTableCell align="right">{props.ad.ad_annonsor}</CustomTableCell>
             </TableRow>
         </React.Fragment>
     )

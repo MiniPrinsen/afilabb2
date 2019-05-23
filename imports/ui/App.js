@@ -9,6 +9,8 @@ import AdTableHead from './AdTableHead.js';
 import CompanyForm from './CompanyForm.js';
 import SubscriberForm from './SubscriberForm.js';
 import SubscriberSearch from './SubscriberSearch.js';
+import { Mongo } from 'meteor/mongo';
+
 
 class App extends Component {
     state = {
@@ -17,8 +19,10 @@ class App extends Component {
         showCompanyForm: false,
         showSubscriberForm: false,
         showSubscriberSearch: false,
+        isCompany: false,
            
         subscriberForm: {
+            subId: '',
             subFirstName: '',
             subLastName: '',
             subPersonNumber: '',
@@ -59,6 +63,7 @@ class App extends Component {
         })
         .then(res => res.json()
         .then(json => {
+            if(json != '') {
             json.map(subscriber => {
                 this.setState({
                     showAdForm: false,
@@ -68,6 +73,7 @@ class App extends Component {
                     
                     showSubscriberForm: true,
                     subscriberForm: {
+                        subId: subscriber._id,
                         subFirstName: subscriber.sub_fornamn,
                         subLastName: subscriber.sub_efternamn,
                         subPersonNumber: subscriber.sub_personNr,
@@ -77,11 +83,39 @@ class App extends Component {
                     }
                 })
             }) 
+        } else {
+            alert("Prenumerationsnumret finns inte registrerat i systemet.")
+        }
         }))
         .catch(err => console.log(err))
     }
 
     updateData = () => {
+        this.setState({
+            adForm: {
+                adPrice: '0 kr'
+            },
+            isCompany: false,
+          });
+           var name = this.state.subscriberForm.subFirstName;
+           var subid = this.state.subscriberForm.subId
+          try {
+            Ads.find({sub_id: this.state.subscriberForm.subId}).forEach(function(collname) {
+                //console.log("God dag");
+
+                var dota = collname._id
+
+                console.log("data: ", dota)
+                Ads.update({_id: dota}, { $set: { ad_annonsor: name } })
+            })
+           
+                
+            
+          } catch(e) {
+                console.log("error: ", e);
+          }
+          
+          
         this.showAdForm()
         fetch(`http://localhost:3002/update?prenNr=${this.state.subscriberSearch.subSearchNr}&subFirstName=${this.state.subscriberForm.subFirstName}&subLastName=${this.state.subscriberForm.subLastName}&subPersonNumber=${this.state.subscriberForm.subPersonNumber}&subAddress=${this.state.subscriberForm.subAddress}&subPostalCode=${this.state.subscriberForm.subPostalCode}`, {
             method: 'GET',
@@ -106,6 +140,12 @@ class App extends Component {
     }
 
     insertCompany = (event) => {
+        this.setState({
+          isCompany: true,
+          adForm: {
+            adPrice: '40 kr'
+        }
+        });
         const comp_name = this.state.companyForm.compName;
         const comp_phone = this.state.companyForm.compPhone;
         const comp_address = this.state.companyForm.compAddress;
@@ -123,22 +163,49 @@ class App extends Component {
             comp_invoice_postal,
             comp_city,
         })
+        this.showAdForm();
     }
 
     insertAd = (event) => {
         event.preventDefault();
 
+        var comp_id = '';
+        var sub_id = '';
+        var ad_pris = this.state.adForm.adPrice;
+        var ad_annonsor = ''
+
+        if(this.state.isCompany) {
+            var data = Companies.findOne({comp_name: this.state.companyForm.compName});
+            comp_id = data._id;
+            console.log("Company ID: ", comp_id);
+            ad_annonsor = 'Företag: ' + data.comp_name;
+        }
+        else {
+            sub_id = this.state.subscriberForm.subId;
+            ad_annonsor = this.state.subscriberForm.subFirstName;
+            console.log("Det här är en privatperson: ", sub_id);
+        }
+       
         const ad_rubrik = this.state.adForm.adTitle
-        const ad_varans_pris = this.state.adForm.adProductPrice
         const ad_innehall = this.state.adForm.adContent
-        const ad_pris = this.state.adForm.adPrice
+        const ad_varans_pris = this.state.adForm.adProductPrice
+        //const _id = ObjectId(this.state.subscriberForm.subId);
+
+        
+        console.log("company id: ", comp_id);
+        
         
             Ads.insert({
                 ad_rubrik,
                 ad_varans_pris,
                 ad_innehall,
                 ad_pris,
+                comp_id,
+                sub_id,
+                ad_annonsor,
             });
+
+
             this.renderAdTable();
     }
     
@@ -169,10 +236,10 @@ class App extends Component {
         return this.props.ads.map((ad) => (
             <Ad key={ad._id} ad={ad}/>
         ));
+        
     }
 
     showAdForm = () => {
-        this.insertCompany();
         this.setState({
             showCompanyForm: false,
             showSubscriberSearch: false,
@@ -200,9 +267,9 @@ class App extends Component {
                     <br/>
                 </form>
                 <ul>
-                    { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.showAdForm}/> }
+                    { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.insertCompany}/> }
                     { this.state.showSubscriberSearch && <SubscriberSearch inputChange={this.handleInputChange} submitForm={this.getData} /> }
-                    { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.insertAd}/> }
+                    { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.insertAd} adForm={this.state.adForm}/> }
                     { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} adForm={this.updateData} subscriberForm={this.state.subscriberForm}/> }   
                 </ul>
                 <table>
