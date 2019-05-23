@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Ads } from '../api/ads.js';
+import { Ads, Companies } from '../api/ads.js';
 
 import Ad from './Ad.js';
 import AdForm from './AdForm.js';
@@ -103,9 +103,28 @@ class App extends Component {
         });
     }
 
+    insertCompany = (event) => {
+        const comp_name = this.state.companyForm.compName;
+        const comp_phone = this.state.companyForm.compPhone;
+        const comp_address = this.state.companyForm.compAddress;
+        const comp_postal = this.state.companyForm.compPostal;
+        const comp_invoice_address = this.state.companyForm.compInvoiceAddress;
+        const comp_invoice_postal = this.state.companyForm.compInvoicePostalCode;
+        const comp_city = this.state.companyForm.compCity;
+
+        Companies.insert({
+            comp_name,
+            comp_phone,
+            comp_address,
+            comp_postal,
+            comp_invoice_address,
+            comp_invoice_postal,
+            comp_city,
+        })
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
-        
         const ad_rubrik = this.state.adForm.adTitle
         const ad_varans_pris = this.state.adForm.adProductPrice
         const ad_innehall = this.state.adForm.adContent
@@ -148,6 +167,7 @@ class App extends Component {
     }
 
     showAdForm = () => {
+        this.insertCompany();
         this.setState({
             showCompanyForm: false,
             showSubscriberSearch: false,
