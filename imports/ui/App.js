@@ -48,9 +48,9 @@ class App extends Component {
             subSearchNr: '',
         }
     };
-    // componentDidMount = () => {
-    //     this.getData()
-    // }
+    componentDidMount = () => {
+        this.getData()
+    }
 
     getData = () => {
         fetch(`http://localhost:3002/subs?prenNr=${this.state.subscriberSearch.subSearchNr}`, {

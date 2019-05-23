@@ -5,7 +5,7 @@ const SubscriberSearch = ({submitForm, inputChange}) => {
         <React.Fragment>
             <label>
                 Prenumerationsnummer:
-                <input type="text" name="subNr" onChange={(event) => inputChange('subscriberSearch', event)} /> <br/>
+                <input type="text" name="subSearchNr" onChange={(event) => inputChange('subscriberSearch', event)} /> <br/>
             </label>
             <button onClick={submitForm}></button>
         </React.Fragment>
