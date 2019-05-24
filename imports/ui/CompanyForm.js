@@ -10,6 +10,7 @@ const CompanyForm = ({ adForm, inputChange }) =>  {
                     <input 
                     type="text" 
                     name="compName" 
+                    required="required"
                     onChange={(event) => inputChange('companyForm', event)} 
                     /> 
                     
@@ -45,6 +46,13 @@ const CompanyForm = ({ adForm, inputChange }) =>  {
                 onChange={(event) => inputChange('companyForm', event)} 
                 /> 
                 <br/> 
+                Ort: 
+                <input 
+                type="text" 
+                name="compCity" 
+                onChange={(event) => inputChange('companyForm', event)} 
+                /> 
+                <br/> 
                 <br/>
 
                 <b>Faktureringsadress: </b> 
@@ -66,7 +74,7 @@ const CompanyForm = ({ adForm, inputChange }) =>  {
                 Ort: 
                 <input 
                 type="text" 
-                name="compCity" 
+                name="compInvoiceCity" 
                 onChange={(event) => inputChange('companyForm', event)} 
                 /> 
                 <br/>

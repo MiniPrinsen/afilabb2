@@ -37,10 +37,11 @@ class App extends Component {
             compPhone: '',
             compAddress: '',
             compPostal: '',
+            compCity: '',
 
             compInvoiceAddress: '',
             compInvoicePostalCode: '',
-            compCity: '',
+            compInvoiceCity: '',
         },
         adForm: {
             adTitle: '',
@@ -102,22 +103,14 @@ class App extends Component {
             isCompany: false,
           });
            var name = this.state.subscriberForm.subFirstName;
-           var subid = this.state.subscriberForm.subId
-          try {
+        try {
             Ads.find({sub_id: this.state.subscriberForm.subId}).forEach(function(singleDoc) {
-                //console.log("God dag");
-
-                var dota = singleDoc._id
-
-                console.log("data: ", dota)
-                Ads.update({_id: dota}, { $set: { ad_annonsor: name } })
-            })
-           
-                
-            
-          } catch(e) {
+                var searchId = singleDoc._id
+                Ads.update({_id: searchId}, { $set: { ad_annonsor: name } })
+            })  
+        } catch(e) {
                 console.log("error: ", e);
-          }
+            }
           
           
         this.showAdForm()
@@ -158,22 +151,23 @@ class App extends Component {
         const comp_invoice_postal = this.state.companyForm.compInvoicePostalCode;
         const comp_city = this.state.companyForm.compCity;
         const comp_org = this.state.companyForm.compOrg;
+        const comp_invoice_city = this.state.companyForm.compInvoiceCity;
 
-        this.validator.message('compName', comp_name, 'required|alpha')
-        this.validator.message('compPhone', comp_phone, 'required|numeric')
-        this.validator.message('compOrg', comp_org, 'required|numeric')
-        this.validator.message('compAddress', comp_address, 'required|alpha_num_space')
-        this.validator.message('compInvoiceAddress', comp_invoice_address, 'required|alpha_num_space')
-        this.validator.message('compInvoicePostalCode', comp_invoice_postal, 'required|numeric')
-        this.validator.message('compCity', comp_city, 'required|alpha')
-        this.validator.message('compPostal', comp_postal, 'required|numeric')
+        // this.validator.message('compName', comp_name, 'required|alpha')
+        // this.validator.message('compPhone', comp_phone, 'required|numeric')
+        // this.validator.message('compOrg', comp_org, 'required|numeric')
+        // this.validator.message('compAddress', comp_address, 'required|alpha_num_space')
+        // this.validator.message('compInvoiceAddress', comp_invoice_address, 'required|alpha_num_space')
+        // this.validator.message('compInvoicePostalCode', comp_invoice_postal, 'required|numeric')
+        // this.validator.message('compCity', comp_city, 'required|alpha')
+        // this.validator.message('compPostal', comp_postal, 'required|numeric')
 
-        if(this.validator.allValid()) {
-            alert("Company submitted");
-        } else {
-            this.validator.showMessages();
-            this.forceUpdate();
-        }
+        // if(this.validator.allValid()) {
+        //     alert("Company submitted");
+        // } else {
+        //     this.validator.showMessages();
+        //     this.forceUpdate();
+        // }
 
         
 
@@ -182,9 +176,10 @@ class App extends Component {
             comp_phone,
             comp_address,
             comp_postal,
+            comp_city,
             comp_invoice_address,
             comp_invoice_postal,
-            comp_city,
+            comp_invoice_city,
             comp_org,
         })
         this.showAdForm();
