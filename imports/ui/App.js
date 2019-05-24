@@ -253,18 +253,35 @@ class App extends Component {
             <div className="container">
                 <nav>
                     <ul>
-                        <li><a href='./main.html'><button>Click Here</button></a></li>
-                        <li><button onClick={this.renderAdTable}>Annonser</button></li>
+                        <li>
+                            <a href='./main.html'>
+                                <button>Skapa ny annons</button>
+                            </a>
+                        </li>
+                        <li>
+                            <button onClick={this.renderAdTable}>Annonser</button>
+                        </li>
                     </ul>
                 </nav>
                 <h1>Annonseringssystem</h1>
                 <form>
-                    <input type="radio" name="advertiser" value="company" onChange={this.toggleCompanyCompleted}/>
-                        Företag
-                    <br/>
-                    <input type="radio" name="advertiser" value="private" onChange={this.toggleSubscriberCompleted}/> 
-                        Privatperson 
-                    <br/>
+                    <div className="advertiser-selection">
+                        <input 
+                        type="radio" 
+                        name="advertiser" 
+                        value="company" 
+                        onChange={this.toggleCompanyCompleted}
+                        />
+                        <p>Företag</p>
+                    </div>
+                    <div className="advertiser-selection">
+                        <input 
+                        type="radio" 
+                        name="advertiser" 
+                        value="private" 
+                        onChange={this.toggleSubscriberCompleted}/> 
+                            <p>Privatperson</p> 
+                    </div>
                 </form>
                 <ul>
                     { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.insertCompany}/> }
