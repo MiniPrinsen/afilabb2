@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 
 const SubscriberSearch = ({submitForm, inputChange}) => {
     return (
-        <React.Fragment>
+        <React.Fragment>     
             <label>
+            <h2>Logga in prenumerant</h2>
                 Prenumerationsnummer:
-                <input type="text" name="subSearchNr" onChange={(event) => inputChange('subscriberSearch', event)} /> <br/>
+                <input 
+                type="text" 
+                name="subSearchNr" 
+                autocomplete="off"
+                className="sub-search" 
+                onChange={(event) => inputChange('subscriberSearch', event)} 
+                />
+                <button onClick={submitForm}>Logga in</button>
             </label>
-            <button onClick={submitForm}></button>
+            
         </React.Fragment>
     );
 } 

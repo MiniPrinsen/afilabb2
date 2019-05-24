@@ -4,37 +4,38 @@ import React, { Component } from 'react';
         return (
        <React.Fragment>
                 <label>
+                <h2>Skapa annons</h2>
+                <div className="input-container">
                         Rubrik:
                         <input type="text"
                          name="adTitle" 
+                         autocomplete="off"
                          onChange={(event) => inputChange('adForm', event)} /> <br/>
-                </label>
-                <br />
-                <label>
+                </div>
+                <div className="input-container">
                         Varans pris:
                         <input type="text"
                          name="adProductPrice"
-                          onChange={(event) => inputChange('adForm', event)} /> <br/>
-                </label>
-                <br />
-                <label>
+                         autocomplete="off"
+                        onChange={(event) => inputChange('adForm', event)} /> <br/>
+                </div>
+                <div className="input-container">
                         Innehåll:
                         <input type="text"
                          name="adContent"
-                          onChange={(event) => inputChange('adForm', event)} /> <br/>
-                </label>
-                <br />
-                <label>
-                        Annonspris(40 för företag, 0 för privatperson):
+                         autocomplete="off"
+                        onChange={(event) => inputChange('adForm', event)} /> <br/>
+                </div>
+                <div className="input-container">
+                        Annonspris:
                         <input type="text"
                          name="adPrice"
                          placeholder={adForm.adPrice}
                          readOnly
                           onChange={(event) => inputChange('adForm', event)} /> <br/>
-                </label>
-                <br />
- 
-                <button onClick={submitAd}></button>
+                </div>
+                <button onClick={submitAd}>Publicera annons</button>
+                </label>             
         </React.Fragment> 
         );
 }
