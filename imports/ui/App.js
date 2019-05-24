@@ -253,7 +253,7 @@ class App extends Component {
             <div className="container">
                 <nav>
                     <ul>
-                        <li><a href="main.html">Skapa annons</a></li>
+                        <li><a href='./main.html'><button>Click Here</button></a></li>
                         <li><button onClick={this.renderAdTable}>Annonser</button></li>
                     </ul>
                 </nav>
