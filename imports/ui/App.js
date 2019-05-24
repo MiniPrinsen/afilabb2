@@ -159,21 +159,21 @@ class App extends Component {
         const comp_city = this.state.companyForm.compCity;
         const comp_org = this.state.companyForm.compOrg;
 
-        this.validator.message('compName', comp_name, 'required|alpha')
-        this.validator.message('compPhone', comp_phone, 'required|numeric')
-        this.validator.message('compOrg', comp_org, 'required|numeric')
-        this.validator.message('compAddress', comp_address, 'required|alpha_num_space')
-        this.validator.message('compInvoiceAddress', comp_invoice_address, 'required|alpha_num_space')
-        this.validator.message('compInvoicePostalCode', comp_invoice_postal, 'required|numeric')
-        this.validator.message('compCity', comp_city, 'required|alpha')
-        this.validator.message('compPostal', comp_postal, 'required|numeric')
+        // this.validator.message('compName', comp_name, 'required|alpha')
+        // this.validator.message('compPhone', comp_phone, 'required|numeric')
+        // this.validator.message('compOrg', comp_org, 'required|numeric')
+        // this.validator.message('compAddress', comp_address, 'required|alpha_num_space')
+        // this.validator.message('compInvoiceAddress', comp_invoice_address, 'required|alpha_num_space')
+        // this.validator.message('compInvoicePostalCode', comp_invoice_postal, 'required|numeric')
+        // this.validator.message('compCity', comp_city, 'required|alpha')
+        // this.validator.message('compPostal', comp_postal, 'required|numeric')
 
-        if(this.validator.allValid()) {
-            alert("Company submitted");
-        } else {
-            this.validator.showMessages();
-            this.forceUpdate();
-        }
+        // if(this.validator.allValid()) {
+        //     alert("Company submitted");
+        // } else {
+        //     this.validator.showMessages();
+        //     this.forceUpdate();
+        // }
 
         
 
@@ -279,40 +279,39 @@ class App extends Component {
                     <ul>
                         <li>
                             <a href='./main.html'>
-                                <button>Skapa ny annons</button>
+                                <button>Registrera/Logga in</button>
                             </a>
                         </li>
                         <li>
-                            <button onClick={this.renderAdTable}>Annonser</button>
+                            <button onClick={this.renderAdTable}>Visa annonser</button>
                         </li>
                     </ul>
                 </nav>
                 <h1>Annonseringssystem</h1>
                 <form>
-                    <div className="advertiser-selection">
+                    <div className="input-container">
                         <input 
                         type="radio" 
                         name="advertiser" 
                         value="company" 
                         onChange={this.toggleCompanyCompleted}
                         />
-                        <p>Företag</p>
+                        Registrera företag
                     </div>
-                    <div className="advertiser-selection">
+                    <div className="input-container">
                         <input 
                         type="radio" 
                         name="advertiser" 
                         value="private" 
-                        onChange={this.toggleSubscriberCompleted}/> 
-                            <p>Privatperson</p> 
+                        onChange={this.toggleSubscriberCompleted}
+                        /> 
+                        Logga in prenumerant
                     </div>
                 </form>
-                <ul>
                     { this.state.showCompanyForm && <CompanyForm inputChange={this.handleInputChange} adForm={this.insertCompany}/> }
                     { this.state.showSubscriberSearch && <SubscriberSearch inputChange={this.handleInputChange} submitForm={this.getData} /> }
                     { this.state.showAdForm && <AdForm inputChange={this.handleInputChange} submitAd={this.insertAd} adForm={this.state.adForm}/> }
                     { this.state.showSubscriberForm && <SubscriberForm inputChange={this.handleInputChange} adForm={this.updateData} subscriberForm={this.state.subscriberForm}/> }   
-                </ul>
                 <table>
                     { this.state.showAdTable && < AdTableHead /> }   
                     <tbody>

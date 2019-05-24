@@ -3,18 +3,37 @@
   padding: 0;
 }
 
+h1 {
+  margin-bottom: 2rem;
+}
+
+h2, h3 {
+  margin-bottom: 1rem;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 body {
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: rgba(0,0,0,0.89);
   font-size: 2rem;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#render-app {
+  width: 90%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  padding-bottom: 2rem;
 }
 
 nav {
@@ -52,26 +71,35 @@ nav button {
   font-weight: 600;
 }
 
-nav button:hover {
-  cursor: pointer;
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 50vw;
+  margin: 2rem;
+}
+
+label button {
+  margin-top: 1rem;
 }
 
 form {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
 }
 
-.advertiser-selection {
+.input-container {
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 1rem 1rem 1rem 0;
 }
 
-.advertiser-selection input{
+/* .input-container input{
   text-rendering: auto;
   color: initial;
   letter-spacing: normal;
@@ -83,7 +111,7 @@ form {
   text-align: start;
   margin: 0em;
   font: initial;
-}
+} */
 
 input[type=radio] {
   border: 0px;
@@ -92,7 +120,34 @@ input[type=radio] {
   margin-right: 1rem;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+input[type=text]:not(.sub-search) {
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: rgba(0,0,0,0.89);
+  font-size: 1.3rem;
+  margin: 0 1rem;
+}
+
+.sub-search {
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: rgba(0,0,0,0.89);
+  font-size: 1.3rem;
+}
+
+label button {
+  align-items: flex-start;
+  text-align: center;
+  color: initial;
+  background-color: #b3e5fc;
+  box-sizing: border-box;
+  padding: 2rem;
+  border-width: 2px;
+  border-style: none;
+  border-image: none;
+  font-size: 2rem;
+  font-weight: 400;
+  width: 100%;
+}
+
+.MuiTableCell-head-8 {
+  font-size: 2rem;
 }

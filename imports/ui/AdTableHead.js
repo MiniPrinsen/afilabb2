@@ -7,13 +7,13 @@ import TableRow from '@material-ui/core/TableRow';
 
 const AdTableHead = () => {
     const CustomTableCell = withStyles(theme => ({
-        head: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        body: {
-            fontSize: 14,
-        },
+        // head: {
+        //     // backgroundColor: theme.palette.common.black,
+        //     color: theme.palette.common.black,
+        // },
+        // // body: {
+        // //     fontSize: 2em,
+        // // },
         }))(TableCell);
     return (
         <React.Fragment>
@@ -24,7 +24,6 @@ const AdTableHead = () => {
                 <CustomTableCell>Pris</CustomTableCell>
                 <CustomTableCell>Annonspris</CustomTableCell>
                 <CustomTableCell>Annonsör</CustomTableCell>
-                <CustomTableCell>Id</CustomTableCell>
                 </TableRow>
             </TableHead> 
         </React.Fragment>
