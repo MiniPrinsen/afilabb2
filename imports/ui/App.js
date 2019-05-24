@@ -10,6 +10,7 @@ import CompanyForm from './CompanyForm.js';
 import SubscriberForm from './SubscriberForm.js';
 import SubscriberSearch from './SubscriberSearch.js';
 import { Mongo } from 'meteor/mongo';
+import SimpleReactValidator from 'simple-react-validator';
 
 
 class App extends Component {
@@ -52,6 +53,9 @@ class App extends Component {
             subSearchNr: '',
         }
     };
+    componentWillMount() {
+        this.validator = new SimpleReactValidator();
+    }
     // componentDidMount = () => {
     //     this.getData()
     // }
@@ -153,6 +157,25 @@ class App extends Component {
         const comp_invoice_address = this.state.companyForm.compInvoiceAddress;
         const comp_invoice_postal = this.state.companyForm.compInvoicePostalCode;
         const comp_city = this.state.companyForm.compCity;
+        const comp_org = this.state.companyForm.compOrg;
+
+        this.validator.message('compName', comp_name, 'required|alpha')
+        this.validator.message('compPhone', comp_phone, 'required|numeric')
+        this.validator.message('compOrg', comp_org, 'required|numeric')
+        this.validator.message('compAddress', comp_address, 'required|alpha_num_space')
+        this.validator.message('compInvoiceAddress', comp_invoice_address, 'required|alpha_num_space')
+        this.validator.message('compInvoicePostalCode', comp_invoice_postal, 'required|numeric')
+        this.validator.message('compCity', comp_city, 'required|alpha')
+        this.validator.message('compPostal', comp_postal, 'required|numeric')
+
+        if(this.validator.allValid()) {
+            alert("Company submitted");
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
+
+        
 
         Companies.insert({
             comp_name,
@@ -162,6 +185,7 @@ class App extends Component {
             comp_invoice_address,
             comp_invoice_postal,
             comp_city,
+            comp_org,
         })
         this.showAdForm();
     }

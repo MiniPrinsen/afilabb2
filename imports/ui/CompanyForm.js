@@ -1,22 +1,28 @@
 import React from 'react';
 
+
 const CompanyForm = ({ adForm, inputChange }) =>  {
     return (
         <React.Fragment>
             <label>
-                Namn:
-                <input 
-                type="text" 
-                name="compName" 
-                onChange={(event) => inputChange('companyForm', event)} 
-                /> 
+                <div>
+                    Namn:
+                    <input 
+                    type="text" 
+                    name="compName" 
+                    onChange={(event) => inputChange('companyForm', event)} 
+                    /> 
+                    
+                </div>
                 <br/>
+                <div>
                 Organisationsnummer: 
                 <input 
                 type="text" 
                 name="compOrg" 
                 onChange={(event) => inputChange('companyForm', event)} 
                 /> 
+                </div>
                 <br/>
                 Telefonnummer:
                 <input 
